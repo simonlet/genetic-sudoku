@@ -48,6 +48,37 @@ public class QQWingSudokuFactory {
         return solution;
     }
 
+    public static int[][] convertToSudoku(int[] sudoku1d) {
+        int[][] sudoku = new int[9][9];
+        if (sudoku1d.length != 81) {
+            System.out.println("Something went wrong with creating the sudoku with QQWing!");
+            System.exit(1);
+        }
+        for (int i = 0; i < sudoku1d.length; i++) {
+            int currentRow = i / 9;
+            int currentColumn = i % 9;
+            sudoku[currentRow][currentColumn] = sudoku1d[i];
+        }
+        return sudoku;
+    }
+    
+    public static void printSudoku(int[][] sudoku) {
+        System.out.println("-------------------------");
+        for (int row = 0; row < sudoku.length; row++) {
+            System.out.print("| ");
+            for (int column = 0; column < sudoku[0].length; column++) {
+                System.out.print(sudoku[row][column] + " ");
+                if (column % 3 == 2) {
+                    System.out.print("| ");
+                }
+            }
+            System.out.println("");
+            if (row % 3 == 2) {
+                System.out.println("-------------------------");
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int option = 1;
         //int option = 2;
@@ -60,6 +91,13 @@ public class QQWingSudokuFactory {
             case 1:
                 //Extremely easy puzzle, should be solvable without tuning the parameters of the genetic algorithm
                 puzzle = computePuzzleWithNHolesPerRow(3);
+                for (int i : puzzle) {
+                    System.out.println(i);
+                }
+                System.out.println(puzzle.length);
+
+                int[][] sudoku = convertToSudoku(puzzle);
+                printSudoku(sudoku);
                 break;
             case 2:
                 //Puzzle with difficulty SIMPLE as assessed by QQWing.
@@ -83,9 +121,9 @@ public class QQWingSudokuFactory {
                 break;
         }
 
+
         //IMPORTANT: QQWing returns the puzzle as a single-dimensional array of size 81, row by row.
         //           Holes (cells without a number from 1 to 9) are represented by the value 0.
         //           It is advisable to convert this array to a data structure more amenable to manipulation.
     }
-
 }
