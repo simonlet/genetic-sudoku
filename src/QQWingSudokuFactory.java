@@ -7,6 +7,16 @@ import org.jgap.*;
 import org.jgap.impl.*;
 
 public class QQWingSudokuFactory {
+
+    public static int[][] createSudoku(int option) {
+        int[] puzzle = createPuzzle(option);
+        //IMPORTANT: QQWing returns the puzzle as a single-dimensional array of size 81, row by row.
+        //           Holes (cells without a number from 1 to 9) are represented by the value 0.
+        //           It is advisable to convert this array to a data structure more amenable to manipulation.
+        int[][] sudoku = convertToSudoku(puzzle);
+        return sudoku;
+    }
+
     //create sudoku of specific difficulty level
     public static int[] computePuzzleByDifficulty(Difficulty d) {
         QQWing qq = new QQWing();
@@ -62,23 +72,6 @@ public class QQWingSudokuFactory {
         }
         return sudoku;
     }
-    
-    public static void printSudoku(int[][] sudoku) {
-        System.out.println("-------------------------");
-        for (int row = 0; row < sudoku.length; row++) {
-            System.out.print("| ");
-            for (int column = 0; column < sudoku[0].length; column++) {
-                System.out.print(sudoku[row][column] + " ");
-                if (column % 3 == 2) {
-                    System.out.print("| ");
-                }
-            }
-            System.out.println("");
-            if (row % 3 == 2) {
-                System.out.println("-------------------------");
-            }
-        }
-    }
 
     public static int[] getMissingNumbersPerRow(int[][] sudoku) {
         int[] countArray = new int[9];
@@ -99,7 +92,6 @@ public class QQWingSudokuFactory {
         }
         return count;
     }
-
 
     public static int[] createPuzzle(int option) {
         switch (option) {
@@ -127,67 +119,20 @@ public class QQWingSudokuFactory {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        int option = 1;
-        //int option = 2;
-        //int option = 3;
-        //int option = 4;
-        //int option = 5;
-
-        int[] puzzle = createPuzzle(option);
-        //IMPORTANT: QQWing returns the puzzle as a single-dimensional array of size 81, row by row.
-        //           Holes (cells without a number from 1 to 9) are represented by the value 0.
-        //           It is advisable to convert this array to a data structure more amenable to manipulation.
-        int[][] sudoku = convertToSudoku(puzzle);
-        printSudoku(sudoku);
-        int[] missingNumbersPerRow = getMissingNumbersPerRow(sudoku);
-        int missingNumbers = getMissingNumbers(missingNumbersPerRow);
-        // number of missing numbers == chromosome size
-        int chromosomeSize = missingNumbers;
-
-
-        /*
-        * The following genetic algorithm stuff is based on this source:
-        * https://homepages.ecs.vuw.ac.nz/~lensenandr/jgap/documentation/doc/tutorial.html#step1
-        * */
-        // create configuration
-        Configuration conf = new DefaultConfiguration();
-
-        // set fitness function
-        FitnessFunction sudokuFitnessFunction = new SudokuSolverFitnessFunction(sudoku);
-        conf.setFitnessFunction(sudokuFitnessFunction);
-
-        // create genes
-        Gene[] sampleGenes = new Gene[chromosomeSize];
-        for (int i = 0; i < sampleGenes.length; i++) {
-            sampleGenes[i] = new IntegerGene(conf, 1, 9 );
+    public static void printSudoku(int[][] sudoku) {
+        System.out.println("-------------------------");
+        for (int row = 0; row < sudoku.length; row++) {
+            System.out.print("| ");
+            for (int column = 0; column < sudoku[0].length; column++) {
+                System.out.print(sudoku[row][column] + " ");
+                if (column % 3 == 2) {
+                    System.out.print("| ");
+                }
+            }
+            System.out.println("");
+            if (row % 3 == 2) {
+                System.out.println("-------------------------");
+            }
         }
-        // create chromosome
-        Chromosome sudokuChromosome = new Chromosome(conf, sampleGenes);
-        conf.setSampleChromosome(sudokuChromosome);
-
-        // set population size
-        conf.setPopulationSize(1);
-
-
-        /* ########## LET THE EVOLUTION BEGIN! */
-
-        /* TODO: enforce the row constraints until a chromosome fulfills them
-        *  generate a chromosome that satisfies the row constraint for each row
-        *  aka each row must have the values 1 - 9 and every number exists only once per row
-        */
-
-        // genotype is a population of chromosomes
-        Genotype population = Genotype.randomInitialGenotype(conf);
-
-        /* TODO: populate the initial chromosome by randomly permuting the numbers of each row */
-
-
-        // evolve the population
-        // population.evolve();
-
-        // check if there is a satisfactory solution
-        // IChromosome bestSolutionSoFar = population.getFittestChromosome();
-
     }
 }
