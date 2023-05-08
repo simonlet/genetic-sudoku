@@ -26,8 +26,22 @@ public class SudokuSolverFitnessFunction extends FitnessFunction {
     @Override
     protected double evaluate(IChromosome sudokuChromosome) {
         /* TODO: fill the zeros of the sudoku with the values of the chromosome */
-        int[][] sudokuWithChromosomeCombined;
-        return 0;
+        int[][] sudokuWithChromosomeCombined = sudoku;
+        //fill sudokuWithChormosomeComined with the values of sudokuChromosome
+        Gene[] genes = sudokuChromosome.getGenes();
+        int currentGene=0;//iterates over the genes
+        for(int row = 0; row < 9; row++){
+            for (int column = 0; column<9; column++) {
+                if(sudoku[row][column]==0){
+                    sudokuWithChromosomeCombined[row][column]=(Integer)genes[currentGene].getAllele();
+                    currentGene++;
+                }
+            }
+        }
+
+        int numberOfUniqueValues = getNumberOfUniqueValuesPerColumn(sudokuWithChromosomeCombined) +
+                                    getNumberOfUniqueValuesPerBlock(sudokuWithChromosomeCombined);
+        return numberOfUniqueValues;
     }
 
     private int getNumberOfUniqueValuesPerColumn(int[][] sudokuWithChromosome) {
