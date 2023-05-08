@@ -77,7 +77,6 @@ public class Main {
         // set population size
         conf.setPopulationSize(1);
 
-
         /* ########## LET THE EVOLUTION BEGIN! */
 
         // genotype is a population of chromosomes
@@ -85,9 +84,10 @@ public class Main {
 
         /* TODO: populate the initial chromosome by randomly permuting the numbers of each row */
 
-
         // evolve the population
-        // population.evolve();
+        population.evolve();
+
+        var result = population.getFittestChromosome();
 
         // check if there is a satisfactory solution
         // IChromosome bestSolutionSoFar = population.getFittestChromosome();
