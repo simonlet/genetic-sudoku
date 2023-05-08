@@ -1,5 +1,6 @@
 import org.jgap.FitnessFunction;
 import org.jgap.IChromosome;
+import org.jgap.Gene;
 
 import java.util.HashSet;
 
@@ -57,7 +58,23 @@ public class SudokuSolverFitnessFunction extends FitnessFunction {
     }
 
     private int getNumberOfUniqueValuesPerBlock(int[][] sudokuWithChromosome) {
-        /* TODO: implement */
-        return 0;
+        int fitness = 0;
+        int x=0;
+        int y=0;
+        for (int block = 0; block < 9; block++) {
+            HashSet<Integer> uniqueValuesInBlock = new HashSet<>();
+            for (int row = 0; row < 3; row++) {
+                for (int column = 0; column < 3; column++){
+                    uniqueValuesInBlock.add(sudokuWithChromosome[x+row][y+column]);
+                }
+            }
+            x=(x+3)%9;
+            if((block+1)%3==0) {
+                y+=3;
+            }
+            System.out.println("The start coordinate of block "+ block + " is (" +x+ "|" +y+ ")");
+            fitness += uniqueValuesInBlock.size();
+        }
+        return fitness;
     }
 }
