@@ -26,7 +26,6 @@ public class SudokuSolverFitnessFunction extends FitnessFunction {
 
     @Override
     protected double evaluate(IChromosome sudokuChromosome) {
-        /* TODO: fill the zeros of the sudoku with the values of the chromosome */
         int[][] sudokuWithChromosomeCombined = sudoku;
         //fill sudokuWithChormosomeComined with the values of sudokuChromosome
         Gene[] genes = sudokuChromosome.getGenes();
