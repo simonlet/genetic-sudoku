@@ -62,7 +62,6 @@ public class SudokuSolverFitnessFunction extends FitnessFunction {
         int y=0;
         for (int block = 0; block < 9; block++)
         {
-            System.out.println("The start coordinate of block "+ block + " is (" +x+ "|" +y+ ")");
             HashSet<Integer> uniqueValuesInBlock = new HashSet<>();
             for (int row = 0; row < 3; row++)
             {

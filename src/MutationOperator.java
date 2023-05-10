@@ -40,10 +40,10 @@ public class MutationOperator implements GeneticOperator {
 
         // swap genes
         IChromosome copiedChromosome = (IChromosome) chromosome.clone();
-        Gene gene1 = copiedChromosome.getGene(geneIndex1);
-        Gene gene2 = copiedChromosome.getGene(geneIndex2);
-        copiedChromosome.getGene(geneIndex1).setAllele(gene2.getAllele());
-        copiedChromosome.getGene(geneIndex2).setAllele(gene1.getAllele());
+
+        Object temp = copiedChromosome.getGene(geneIndex1).getAllele();
+        copiedChromosome.getGene(geneIndex1).setAllele(copiedChromosome.getGene(geneIndex2).getAllele());
+        copiedChromosome.getGene(geneIndex2).setAllele(temp);
 
         return copiedChromosome;
     }
