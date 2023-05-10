@@ -42,13 +42,13 @@ public class Main {
         {
             boundaries[row] = counter;
             // get all missing numbers
-            HashSet<Integer> possibleNumbers = new HashSet<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
             HashSet<Integer> numbersInRow = new HashSet<>();
-
             for (int column = 0; column < 9; column++)
             {
                 numbersInRow.add(sudoku[row][column]);
             }
+
+            HashSet<Integer> possibleNumbers = new HashSet<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
             possibleNumbers.removeAll(numbersInRow);
 
             // just set the missing numbers as the first numbers to the chromosome
@@ -100,6 +100,8 @@ public class Main {
         population.evolve();
 
         var result = population.getFittestChromosome();
+
+        System.out.println(result);
 
 
 
