@@ -13,11 +13,10 @@ public class MutationOperator implements GeneticOperator {
 
     public void operate(final Population a_population, final List a_candidateChromosomes) {
         RandomGenerator generator = configuration.getRandomGenerator();
-        for (int i = 0; i < a_population.size(); i++) {
+        int populationSize = a_population.size();
+        for (int i = 0; i < populationSize; i++) {
             IChromosome chromosome = a_population.getChromosome(i);
-
             IChromosome mutatedChromosome = doMutation(chromosome, generator);
-
             if (mutatedChromosome != null) {
                 a_candidateChromosomes.add(mutatedChromosome);
             }
