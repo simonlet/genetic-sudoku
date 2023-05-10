@@ -3,8 +3,6 @@ import java.util.Random;
 
 import com.qqwing.Difficulty;
 import com.qqwing.QQWing;
-import org.jgap.*;
-import org.jgap.impl.*;
 
 public class QQWingSudokuFactory {
 

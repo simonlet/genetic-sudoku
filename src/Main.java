@@ -33,12 +33,6 @@ public class Main {
         FitnessFunction sudokuFitnessFunction = new SudokuSolverFitnessFunction(sudoku);
         conf.setFitnessFunction(sudokuFitnessFunction);
 
-
-        /* TODO: enforce the row constraints until a chromosome fulfills them
-         *  generate a chromosome that satisfies the row constraint for each row
-         *  aka each row must have the values 1 - 9 and every number exists only once per row
-         */
-
         // create genes
         Gene[] sampleGenes = new Gene[chromosomeSize];
         int counter = 0;
