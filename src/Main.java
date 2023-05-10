@@ -100,15 +100,15 @@ public class Main {
         // genotype is a population of chromosomes
         Genotype population = new Genotype(conf, sudokuChromosomes);
 
-
-        for (int i = 0; i < 100; i++)
+        int numberOfGenerations = 1000;
+        for (int i = 0; i < numberOfGenerations; i++)
         {
             // evolve the population
             population.evolve();
             var fittestChromosome = population.getFittestChromosome();
             System.out.println(fittestChromosome.getFitnessValue());
             if (fittestChromosome.getFitnessValue() == 162) {
-                System.out.println("Found solution to sudoku:");
+                System.out.println("Found solution to sudoku after " + (i+1) + " generations:");
                 System.out.println();
 
                 Gene[] genes = fittestChromosome.getGenes();
@@ -124,11 +124,11 @@ public class Main {
                 }
 
                 QQWingSudokuFactory.printSudoku(sudoku);
+                return;
             }
         }
+        System.out.println("Did not find a solution after " + numberOfGenerations + " generations!");
 
-        // check if there is a satisfactory solution
-        // IChromosome bestSolutionSoFar = population.getFittestChromosome();
 
     }
 }
