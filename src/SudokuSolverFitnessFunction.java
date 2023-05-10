@@ -61,10 +61,14 @@ public class SudokuSolverFitnessFunction extends FitnessFunction {
         int fitness = 0;
         int x=0;
         int y=0;
-        for (int block = 0; block < 9; block++) {
+        for (int block = 0; block < 9; block++)
+        {
+            System.out.println("The start coordinate of block "+ block + " is (" +x+ "|" +y+ ")");
             HashSet<Integer> uniqueValuesInBlock = new HashSet<>();
-            for (int row = 0; row < 3; row++) {
-                for (int column = 0; column < 3; column++){
+            for (int row = 0; row < 3; row++)
+            {
+                for (int column = 0; column < 3; column++)
+                {
                     uniqueValuesInBlock.add(sudokuWithChromosome[x+row][y+column]);
                 }
             }
@@ -72,7 +76,6 @@ public class SudokuSolverFitnessFunction extends FitnessFunction {
             if((block+1)%3==0) {
                 y+=3;
             }
-            System.out.println("The start coordinate of block "+ block + " is (" +x+ "|" +y+ ")");
             fitness += uniqueValuesInBlock.size();
         }
         return fitness;

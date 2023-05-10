@@ -2,10 +2,8 @@ import org.jgap.*;
 import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.IntegerGene;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -44,9 +42,11 @@ public class Main {
         // create genes
         Gene[] sampleGenes = new Gene[chromosomeSize];
         int counter = 0;
+        int[] boundaries = new int[9];
 
         for (int row = 0; row < 9; row++)
         {
+            boundaries[row] = counter;
             // get all missing numbers
             HashSet<Integer> possibleNumbers = new HashSet<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
             HashSet<Integer> numbersInRow = new HashSet<>();
@@ -76,6 +76,9 @@ public class Main {
 
         // set population size
         conf.setPopulationSize(1);
+
+        conf.addGeneticOperator(new CustomCrossoverOperator(conf, boundaries));
+        conf.addGeneticOperator(new MutationOperator(boundaries));
 
         /* ########## LET THE EVOLUTION BEGIN! */
 
