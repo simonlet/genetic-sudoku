@@ -91,25 +91,23 @@ public class Main {
         // set sample chromosome
         conf.setSampleChromosome(sudokuChromosomes[0]);
 
-        // set population size
-        conf.setPopulationSize(sudokuChromosomes.length);
-
         conf.addGeneticOperator(new CustomCrossoverOperator(conf, boundaries));
         conf.addGeneticOperator(new MutationOperator(conf, boundaries));
 
         /* ########## LET THE EVOLUTION BEGIN! */
-
+        // set population size
+        conf.setPopulationSize(20);
         // genotype is a population of chromosomes
-        Genotype population = new Genotype(conf, sudokuChromosomes );
-
-        // evolve the population
-        population.evolve();
-
-        var result = population.getFittestChromosome();
-
-        System.out.println(result);
+        Genotype population = new Genotype(conf, sudokuChromosomes);
 
 
+        for (int i = 0; i < 100; i++)
+        {
+            // evolve the population
+            population.evolve();
+            var result = population.getFittestChromosome();
+            System.out.println(result.getFitnessValue());
+        }
 
         // check if there is a satisfactory solution
         // IChromosome bestSolutionSoFar = population.getFittestChromosome();
