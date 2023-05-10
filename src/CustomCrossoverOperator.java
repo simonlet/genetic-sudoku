@@ -7,7 +7,7 @@ public class CustomCrossoverOperator implements GeneticOperator
     int[] boundaries;
     Configuration configuration;
 
-    CustomCrossoverOperator(Configuration configuration, int[] boundaries) throws InvalidConfigurationException
+    CustomCrossoverOperator(Configuration configuration, int[] boundaries)
     {
         this.configuration = configuration;
         this.boundaries = boundaries;

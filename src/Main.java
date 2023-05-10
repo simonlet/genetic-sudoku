@@ -71,7 +71,13 @@ public class Main {
         // set genes of chromosome so that row constraints are satisfied
         sudokuChromosomes[0].setGenes(sampleGenes);
 
-        Gene[] newGenes = (Gene[]) sampleGenes.clone();
+        Gene[] newGenes = new Gene[sampleGenes.length];
+
+        for(int i = 0; i < sampleGenes.length; i++)
+        {
+            newGenes[i] = new IntegerGene(conf, 1, 9 );
+            newGenes[i].setAllele(sampleGenes[i].getAllele());
+        }
 
         for(int i = 0; i < boundaries.length - 1; i++)
         {
