@@ -78,14 +78,12 @@ public class Main {
         conf.setPopulationSize(1);
 
         conf.addGeneticOperator(new CustomCrossoverOperator(conf, boundaries));
-        conf.addGeneticOperator(new MutationOperator(boundaries));
+        conf.addGeneticOperator(new MutationOperator(conf, boundaries));
 
         /* ########## LET THE EVOLUTION BEGIN! */
 
         // genotype is a population of chromosomes
         Genotype population = new Genotype(conf, new Chromosome[] { sudokuChromosome });
-
-        /* TODO: populate the initial chromosome by randomly permuting the numbers of each row */
 
         // evolve the population
         population.evolve();
