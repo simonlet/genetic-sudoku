@@ -36,7 +36,7 @@ public class Main {
         // create genes
         Gene[] sampleGenes = new Gene[chromosomeSize];
         int counter = 0;
-        int[] boundaries = new int[9];
+        int[] boundaries = new int[10];
 
         for (int row = 0; row < 9; row++)
         {
@@ -60,16 +60,33 @@ public class Main {
             }
         }
 
+        boundaries[9] = sampleGenes.length;
+
         // create empty chromosome
-        Chromosome sudokuChromosome = new Chromosome(conf);
+        Chromosome[] sudokuChromosomes = {
+                new Chromosome(conf),
+                new Chromosome(conf)
+        };
+
         // set genes of chromosome so that row constraints are satisfied
-        sudokuChromosome.setGenes(sampleGenes);
+        sudokuChromosomes[0].setGenes(sampleGenes);
+
+        Gene[] newGenes = (Gene[]) sampleGenes.clone();
+
+        for(int i = 0; i < boundaries.length - 1; i++)
+        {
+            Object temp = newGenes[boundaries[i]].getAllele();
+            newGenes[boundaries[i]].setAllele(newGenes[boundaries[i + 1] - 1].getAllele());
+            newGenes[boundaries[i + 1] - 1].setAllele(temp);
+        }
+
+        sudokuChromosomes[1].setGenes(newGenes);
 
         // set sample chromosome
-        conf.setSampleChromosome(sudokuChromosome);
+        conf.setSampleChromosome(sudokuChromosomes[0]);
 
         // set population size
-        conf.setPopulationSize(1);
+        conf.setPopulationSize(sudokuChromosomes.length);
 
         conf.addGeneticOperator(new CustomCrossoverOperator(conf, boundaries));
         conf.addGeneticOperator(new MutationOperator(conf, boundaries));
@@ -77,12 +94,14 @@ public class Main {
         /* ########## LET THE EVOLUTION BEGIN! */
 
         // genotype is a population of chromosomes
-        Genotype population = new Genotype(conf, new Chromosome[] { sudokuChromosome });
+        Genotype population = new Genotype(conf, sudokuChromosomes );
 
         // evolve the population
         population.evolve();
 
         var result = population.getFittestChromosome();
+
+
 
         // check if there is a satisfactory solution
         // IChromosome bestSolutionSoFar = population.getFittestChromosome();
