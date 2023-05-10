@@ -26,12 +26,14 @@ public class SudokuSolverFitnessFunction extends FitnessFunction {
 
     @Override
     protected double evaluate(IChromosome sudokuChromosome) {
-        int[][] sudokuWithChromosomeCombined = sudoku;
+        int[][] sudokuWithChromosomeCombined = new int[9][9];
         //fill sudokuWithChormosomeComined with the values of sudokuChromosome
         Gene[] genes = sudokuChromosome.getGenes();
         int currentGene=0;//iterates over the genes
         for(int row = 0; row < 9; row++){
             for (int column = 0; column<9; column++) {
+                sudokuWithChromosomeCombined[row][column] = sudoku[row][column];
+
                 if(sudoku[row][column]==0){
                     sudokuWithChromosomeCombined[row][column]=(Integer)genes[currentGene].getAllele();
                     currentGene++;

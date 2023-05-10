@@ -105,8 +105,26 @@ public class Main {
         {
             // evolve the population
             population.evolve();
-            var result = population.getFittestChromosome();
-            System.out.println(result.getFitnessValue());
+            var fittestChromosome = population.getFittestChromosome();
+            System.out.println(fittestChromosome.getFitnessValue());
+            if (fittestChromosome.getFitnessValue() == 162) {
+                System.out.println("Found solution to sudoku:");
+                System.out.println();
+
+                Gene[] genes = fittestChromosome.getGenes();
+
+                int currentGene=0;
+                for(int row = 0; row < 9; row++){
+                    for (int column = 0; column<9; column++) {
+                        if(sudoku[row][column]==0){
+                            sudoku[row][column]=(Integer)genes[currentGene].getAllele();
+                            currentGene++;
+                        }
+                    }
+                }
+
+                QQWingSudokuFactory.printSudoku(sudoku);
+            }
         }
 
         // check if there is a satisfactory solution
