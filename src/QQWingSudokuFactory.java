@@ -117,20 +117,29 @@ public class QQWingSudokuFactory {
         }
     }
 
-    public static void printSudoku(int[][] sudoku) {
-        System.out.println("-------------------------");
+    public static String SudokuToString(int[][] sudoku)
+    {
+        String string = "-------------------------\n";
         for (int row = 0; row < sudoku.length; row++) {
-            System.out.print("| ");
-            for (int column = 0; column < sudoku[0].length; column++) {
-                System.out.print(sudoku[row][column] + " ");
-                if (column % 3 == 2) {
-                    System.out.print("| ");
+            string += "| ";
+            for (int column = 0; column < sudoku[0].length; column++)
+            {
+                string += sudoku[row][column];
+                string += " ";
+
+                if (column % 3 == 2)
+                {
+                    string += "| ";
                 }
             }
-            System.out.println("");
-            if (row % 3 == 2) {
-                System.out.println("-------------------------");
+            string += "\n";
+
+            if (row % 3 == 2)
+            {
+                string += "-------------------------\n";
             }
         }
+
+        return string;
     }
 }
