@@ -24,6 +24,7 @@ public class CustomCrossoverOperator implements GeneticOperator
 
         int index1, index2;
 
+        // get two random indexes
         index1 = generator.nextInt(size);
         index2 = generator.nextInt(size);
 
@@ -33,6 +34,7 @@ public class CustomCrossoverOperator implements GeneticOperator
         Gene[] firstGenes = firstMate.getGenes();
         Gene[] secondGenes = secondMate.getGenes();
 
+        // get a random boundary to perform the crossover
         int separator = boundaries[generator.nextInt(boundaries.length)];
 
         for(int i = 0; i < separator; i++)
@@ -42,6 +44,7 @@ public class CustomCrossoverOperator implements GeneticOperator
             secondGenes[i].setAllele(firstAllele);
         }
 
+        // Add the new chromosomes
         a_candidateChromosomes.add(firstMate);
         a_candidateChromosomes.add(secondMate);
     }

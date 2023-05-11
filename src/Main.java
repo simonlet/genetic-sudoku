@@ -33,7 +33,7 @@ public class Main {
         FitnessFunction sudokuFitnessFunction = new SudokuSolverFitnessFunction(sudoku);
         conf.setFitnessFunction(sudokuFitnessFunction);
 
-        // create genes
+        // create genes in a specific way so that the row constraints are satisfied
         Gene[] sampleGenes = new Gene[chromosomeSize];
         int counter = 0;
         int[] boundaries = new int[10];
@@ -71,6 +71,7 @@ public class Main {
         // set genes of chromosome so that row constraints are satisfied
         sudokuChromosomes[0].setGenes(sampleGenes);
 
+        // Clone Genes
         Gene[] newGenes = new Gene[sampleGenes.length];
 
         for(int i = 0; i < sampleGenes.length; i++)
@@ -79,6 +80,7 @@ public class Main {
             newGenes[i].setAllele(sampleGenes[i].getAllele());
         }
 
+        // And invert them so we have two different startup populations that satisfy the row constraint
         for(int i = 0; i < boundaries.length - 1; i++)
         {
             Object temp = newGenes[boundaries[i]].getAllele();
@@ -96,10 +98,12 @@ public class Main {
 
         /* ########## LET THE EVOLUTION BEGIN! */
         // set population size
-        conf.setPopulationSize(20);
+        conf.setPopulationSize(100);
         // genotype is a population of chromosomes
         Genotype population = new Genotype(conf, sudokuChromosomes);
 
+        // Evolve the population until we get a solution
+        // Or until we run out of tries
         int numberOfGenerations = 1000;
         for (int i = 0; i < numberOfGenerations; i++)
         {
@@ -107,16 +111,22 @@ public class Main {
             population.evolve();
             var fittestChromosome = population.getFittestChromosome();
             System.out.println(fittestChromosome.getFitnessValue());
-            if (fittestChromosome.getFitnessValue() == 162) {
+
+            if (fittestChromosome.getFitnessValue() == 162)
+            {
                 System.out.println("Found solution to sudoku after " + (i+1) + " generations:");
                 System.out.println();
 
                 Gene[] genes = fittestChromosome.getGenes();
 
+                // Fill sudoku with the results of the solution
                 int currentGene=0;
-                for(int row = 0; row < 9; row++){
-                    for (int column = 0; column<9; column++) {
-                        if(sudoku[row][column]==0){
+                for(int row = 0; row < 9; row++)
+                {
+                    for (int column = 0; column<9; column++)
+                    {
+                        if(sudoku[row][column]==0)
+                        {
                             sudoku[row][column]=(Integer)genes[currentGene].getAllele();
                             currentGene++;
                         }
@@ -128,7 +138,5 @@ public class Main {
             }
         }
         System.out.println("Did not find a solution after " + numberOfGenerations + " generations!");
-
-
     }
 }

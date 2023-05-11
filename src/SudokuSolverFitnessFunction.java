@@ -80,6 +80,4 @@ public class SudokuSolverFitnessFunction extends FitnessFunction {
         }
         return fitness;
     }
-
-
 }
